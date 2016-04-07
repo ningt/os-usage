@@ -1,0 +1,14 @@
+{
+  "name": "os-usage",
+  "version": "0.0.1",
+  "description": "A node module to watch provides system usage",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "os"
+  ],
+  "author": "Tang Ning",
+  "license": "ISC"
+}
