@@ -28,6 +28,19 @@ function parseCpuUsage(data) {
     }
 }
 
+function parseMemInKb(mem) {
+    var num = Number(mem.substring(0, mem.length-1));
+    if (mem.charAt(mem.length-1) === 'M') {
+        return num * 1024;
+    }
+    else if (mem.charAt(mem.length-1) === 'G') {
+        return num * 1024 * 1024;
+    }
+    else if (mem.charAt(mem.length-1) === 'K') {
+        return num;
+    }
+}
+
 function parseMemUsage(data) {
     let regex = /\s+(\d+.)\s+.*\((\d+.)\s+.*\s(\d+.)/;
 
@@ -36,7 +49,10 @@ function parseMemUsage(data) {
         return {
             used: m[1],
             wired: m[2],
-            unused: m[3]
+            unused: m[3],
+            used_kb: parseMemInKb(m[1]),
+            wired_kb: parseMemInKb(m[2]),
+            unused_kb: parseMemInKb(m[3])
         };
     }
 }
