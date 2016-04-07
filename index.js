@@ -3,8 +3,8 @@
 const child_process = require('child_process');
 const EventEmitter = require('events').EventEmitter;
 
-const CPU_OPTS = ['-stats', 'pid,cpu,command'];
-const MEM_OPTS = ['-stats', 'pid,mem,command'];
+const CPU_OPTS = ['-stats', 'pid,cpu,command', '-o', 'cpu'];
+const MEM_OPTS = ['-stats', 'pid,mem,command', '-o', 'mem'];
 
 function parseProcess(data) {
 
