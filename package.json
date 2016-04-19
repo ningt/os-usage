@@ -1,14 +1,21 @@
 {
   "name": "os-usage",
   "version": "0.0.1",
-  "description": "A node module to watch provides system usage",
+  "description": "A node module to watch system usage",
   "main": "index.js",
   "scripts": {
     "test": "node test/test.js"
   },
   "keywords": [
-    "os"
+    "os",
+    "monitor",
+    "usage"
   ],
   "author": "Tang Ning",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cross-spawn-async": "^2.2.2",
+    "install": "^0.6.1",
+    "npm": "^3.8.6"
+  }
 }

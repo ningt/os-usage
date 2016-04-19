@@ -1,22 +1,22 @@
 'use strict';
 
-const child_process = require('child_process');
-const EventEmitter = require('events').EventEmitter;
+var spawn = require('cross-spawn-async');
+var EventEmitter = require('events').EventEmitter;
 
-const CPU_OPTS = ['-stats', 'pid,cpu,command', '-o', 'cpu'];
-const MEM_OPTS = ['-stats', 'pid,mem,command', '-o', 'mem'];
+var CPU_OPTS = ['-stats', 'pid,cpu,command', '-o', 'cpu'];
+var MEM_OPTS = ['-stats', 'pid,mem,command', '-o', 'mem'];
 
 function parseProcess(data) {
 
 }
 
 function parseLoadAvg(data) {
-    let regex = /\s(\d+\.\d+).\s+(\d+\.\d+).\s+(\d+\.\d+)\s+.+\s+(\d+\.\d+).*\s+(\d+\.\d+).*\s+(\d+\.\d+)/;
+    var regex = /\s(\d+\.\d+).\s+(\d+\.\d+).\s+(\d+\.\d+)\s+.+\s+(\d+\.\d+).*\s+(\d+\.\d+).*\s+(\d+\.\d+)/;
 
 }
 
 function parseCpuUsage(data) {
-    let regex = /\s+(\d+\.\d+).*\s+(\d+\.\d+).*\s+(\d+\.\d+)/;
+    var regex = /\s+(\d+\.\d+).*\s+(\d+\.\d+).*\s+(\d+\.\d+)/;
 
     var m;
     if (m = regex.exec(data)) {
@@ -42,7 +42,7 @@ function parseMemInKb(mem) {
 }
 
 function parseMemUsage(data) {
-    let regex = /\s+(\d+.)\s+.*\((\d+.)\s+.*\s(\d+.)/;
+    var regex = /\s+(\d+.)\s+.*\((\d+.)\s+.*\s(\d+.)/;
 
     var m;
     if (m = regex.exec(data)) {
@@ -69,7 +69,7 @@ function parseDisk(data) {
 }
 
 function parseTopCpuProcs(data) {
-    let regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
+    var regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
 
     var m, procs = [];
     while (m = regex.exec(data)) {
@@ -84,7 +84,7 @@ function parseTopCpuProcs(data) {
 }
 
 function parseTopMemProcs(data) {
-    let regex = /^(\d+)\s+(\w+).?\s+(.*)$/mg;
+    var regex = /^(\d+)\s+(\w+).?\s+(.*)$/mg;
 
     var m, procs = [];
     while (m = regex.exec(data)) {
@@ -121,7 +121,7 @@ function parseOptions(default_opts, options) {
 var CpuMonitor = function(options) {
     var self = this, opts = parseOptions(CPU_OPTS, options);
 
-    let top = child_process.spawn('/usr/bin/top', opts);
+    var top = spawn('top', opts);
 
     top.stdout.on('data', (data) => {
         var lines = data.toString().split('\n');
@@ -146,7 +146,7 @@ var CpuMonitor = function(options) {
 var MemMonitor = function(options) {
     var self = this, opts = parseOptions(MEM_OPTS, options);
 
-    let top = child_process.spawn('/usr/bin/top', opts);
+    var top = spawn('top', opts);
 
     top.stdout.on('data', (data) => {
         var lines = data.toString().split('\n');
