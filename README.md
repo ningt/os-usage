@@ -76,3 +76,7 @@ Example:
 var opts = {limit: 10, delay: 2};
 var monitor = new usage.CpuMonitor(opts);
 ```
+
+### TODO
+- [ ] Linux support
+- [ ] Windows support
