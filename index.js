@@ -1,25 +1,23 @@
-'use strict';
-
 const child_process = require('child_process');
 const EventEmitter = require('events').EventEmitter;
 
 const CPU_OPTS = ['-stats', 'pid,cpu,command', '-o', 'cpu'];
 const MEM_OPTS = ['-stats', 'pid,mem,command', '-o', 'mem'];
 
-function parseProcess(data) {
+// TODO
+// function parseProcess(data) {
+// }
 
-}
-
-function parseLoadAvg(data) {
-    let regex = /\s(\d+\.\d+).\s+(\d+\.\d+).\s+(\d+\.\d+)\s+.+\s+(\d+\.\d+).*\s+(\d+\.\d+).*\s+(\d+\.\d+)/;
-
-}
+// TODO
+// function parseLoadAvg(data) {
+//     let regex = /\s(\d+\.\d+).\s+(\d+\.\d+).\s+(\d+\.\d+)\s+.+\s+(\d+\.\d+).*\s+(\d+\.\d+).*\s+(\d+\.\d+)/;
+// }
 
 function parseCpuUsage(data) {
     let regex = /\s+(\d+\.\d+).*\s+(\d+\.\d+).*\s+(\d+\.\d+)/;
 
-    var m;
-    if (m = regex.exec(data)) {
+    const m = regex.exec(data);
+    if (m) {
         return {
             user: m[1],
             sys: m[2],
@@ -29,7 +27,8 @@ function parseCpuUsage(data) {
 }
 
 function parseMemInKb(mem) {
-    var num = Number(mem.substring(0, mem.length-1));
+    const num = Number(mem.substring(0, mem.length-1));
+
     if (mem.charAt(mem.length-1) === 'M') {
         return num * 1024;
     }
@@ -44,8 +43,8 @@ function parseMemInKb(mem) {
 function parseMemUsage(data) {
     let regex = /\s+(\d+.)\s+.*\((\d+.)\s+.*\s(\d+.)/;
 
-    var m;
-    if (m = regex.exec(data)) {
+    const m = regex.exec(data);
+    if (m) {
         return {
             used: m[1],
             wired: m[2],
@@ -57,27 +56,28 @@ function parseMemUsage(data) {
     }
 }
 
-function parseVMUsage(data) {
+// function parseVMUsage(data) {
+// }
 
-}
+// function parseNetwork(data) {
+// }
 
-function parseNetwork(data) {
-}
+// function parseDisk(data) {
 
-function parseDisk(data) {
-
-}
+// }
 
 function parseTopCpuProcs(data) {
     let regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
 
-    var m, procs = [];
-    while (m = regex.exec(data)) {
+    let m = regex.exec(data), procs = [];
+    while (m) {
         procs.push({
             pid: m[1],
             cpu: m[2],
             command: m[3].trim()
         });
+
+        m = regex.exec(data);
     }
 
     return procs;
@@ -86,21 +86,23 @@ function parseTopCpuProcs(data) {
 function parseTopMemProcs(data) {
     let regex = /^(\d+)\s+(\w+).?\s+(.*)$/mg;
 
-    var m, procs = [];
-    while (m = regex.exec(data)) {
+    let m = regex.exec(data), procs = [];
+    while (m) {
         procs.push({
             pid: m[1],
             mem: m[2],
             command: m[3].trim()
         });
+
+        m = regex.exec(data);
     }
 
     return procs;
 }
 
 function parseOptions(default_opts, options) {
-    var opts = default_opts;
-    var v, limit = 5, delay = 1;
+    let opts = default_opts;
+    let v, limit = 5, delay = 1;
 
     if (options) {
         v = Number(options.limit);
@@ -118,49 +120,53 @@ function parseOptions(default_opts, options) {
     return opts;
 }
 
-var CpuMonitor = function(options) {
-    var self = this, opts = parseOptions(CPU_OPTS, options);
+const CpuMonitor = function(options) {
+    let self = this, opts = parseOptions(CPU_OPTS, options);
 
     let top = child_process.spawn('/usr/bin/top', opts);
 
     top.stdout.on('data', (data) => {
-        var lines = data.toString().split('\n');
+        let lines = data.toString().split('\n');
 
-        var cpuUsage = parseCpuUsage(lines[3]);
-        if (cpuUsage)
+        const cpuUsage = parseCpuUsage(lines[3]);
+        if (cpuUsage) {
             self.emit('cpuUsage', cpuUsage);
+        }
 
         lines.splice(0, 11);
         data = lines.join('\n');
 
-        var topCpuProcs = parseTopCpuProcs(data);
-        if (topCpuProcs)
+        const topCpuProcs = parseTopCpuProcs(data);
+        if (topCpuProcs) {
             self.emit('topCpuProcs', topCpuProcs);
+        }
     });
 
     self.on('exit', function() {
-       top.kill('SIGINT');
+        top.kill('SIGINT');
     });
 };
 
-var MemMonitor = function(options) {
-    var self = this, opts = parseOptions(MEM_OPTS, options);
+const MemMonitor = function(options) {
+    let self = this, opts = parseOptions(MEM_OPTS, options);
 
     let top = child_process.spawn('/usr/bin/top', opts);
 
     top.stdout.on('data', (data) => {
-        var lines = data.toString().split('\n');
+        let lines = data.toString().split('\n');
 
-        var memUsage = parseMemUsage(lines[6]);
-        if (memUsage)
+        const memUsage = parseMemUsage(lines[6]);
+        if (memUsage) {
             self.emit('memUsage', memUsage);
+        }
 
         lines.splice(0, 11);
         data = lines.join('\n');
 
-        var topMemProcs = parseTopMemProcs(data);
-        if (topMemProcs)
+        const topMemProcs = parseTopMemProcs(data);
+        if (topMemProcs) {
             self.emit('topMemProcs', topMemProcs);
+        }
     });
 
     self.on('exit', function() {
