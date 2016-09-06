@@ -1,0 +1,283 @@
+Processes: 271 total, 2 running, 8 stuck, 261 sleeping, 1228 threads
+2016/09/06 23:36:58
+Load Avg: 1.69, 1.54, 1.50
+CPU usage: 3.57% user, 11.90% sys, 84.52% idle
+SharedLibs: 207M resident, 24M data, 46M linkedit.
+MemRegions: 60651 total, 5856M resident, 226M private, 1595M shared.
+PhysMem: 12G used (2255M wired), 4196M unused.
+VM: 761G vsize, 533M framework vsize, 0(0) swapins, 0(0) swapouts.
+Networks: packets: 2304697/2296M in, 1441627/456M out.
+Disks: 608932/14G read, 562689/12G written.
+
+PID    MEM    COMMAND
+0      1325M+ kernel_task
+44295  768M+  Google Chrome He
+17319  509M+  node
+47024  401M+  Google Chrome He
+28228  355M+  Slack
+44969  337M+  Google Chrome He
+46069  297M+  Google Chrome He
+27274  219M+  Google Chrome
+27286  216M+  Google Chrome He
+192    182M+  WindowServer
+734    178M+  Finder
+27929  167M+  Sublime Text
+743    161M+  softwareupdated
+28236  103M+  iTerm2
+46104  99M+   Google Chrome He
+241    90M+   mds_stores
+313    78M+   parentalcontrols
+27285  77M+   Google Chrome He
+27930  69M+   plugin_host
+732    65M+   Dock
+65     65M+   repmgr
+27277  64M+   Google Chrome He
+34816  64M+   Google Chrome He
+70     60M+   mds
+1058   42M+   PanGPS
+42647  37M+   Google Chrome He
+748    35M+   Spotlight
+27288  35M+   Google Chrome He
+106    33M+   loginwindow
+1067   32M+   NotificationCent
+27278  30M+   Google Chrome He
+753    29M+   SpotlightNetHelp
+30788  29M+   com.apple.appkit
+27284  28M+   Google Chrome He
+88     28M+   launchservicesd
+1611   27M+   SCIM
+1072-  26M+   GlobalProtect
+32476  25M+   Preview
+733    23M+   SystemUIServer
+467    23M+   CalendarAgent
+740    22M+   iconservicesagen
+1069   21M+   2BUA8C4S2C.com.a
+29723  20M+   LookupViewServic
+31536  19M+   LookupViewServic
+484    18M+   nsurlstoraged
+45302  17M+   mdworker
+67     17M+   airportd
+45124  16M+   mdworker
+45301  15M+   mdworker
+45303  15M+   mdworker
+51     15M+   kextd
+662    14M+   fontd
+1      14M+   launchd
+1119   14M+   Spectacle
+447    13M+   lsd
+79     13M+   coreduetd
+3502   13M+   suggestd
+482    13M+   secinitd
+497    13M+   CalNCService
+4028   13M+   com.apple.speech
+1078   12M+   ConferSystemTray
+47     12M+   UserEventAgent
+198    12M+   lsd
+82     11M+   opendirectoryd
+696    11M+   photolibraryd
+501    11M+   storeaccountd
+473    11M+   gamed
+738    11M+   storeassetd
+533    10M+   sharingd
+1086   10M+   diagnostics_agen
+746    10M+   soagent
+69     10M+   warmd
+124    10M+   sandboxd
+92     9992K+ locationd
+470    9860K+ cloudphotosd
+6507   9852K+ nbagent
+1188   9832K+ AppleSpell
+448    9492K+ CommCenter
+42624  9452K+ com.apple.Safari
+487    9404K+ accountsd
+527    9360K+ com.apple.geod
+741    9348K+ com.apple.dock.e
+491    9328K+ cloudd
+1064   9016K+ jamfAgent
+745    9004K+ storeuid
+719    8852K+ com.apple.photom
+85     8660K+ apsd
+440    8636K+ UserEventAgent
+205    8560K+ corestoraged
+444    8532K+ cfprefsd
+1074   8340K+ AppleIDAuthAgent
+32492  8116K+ Image Capture Ex
+476    8112K+ fmfd
+485    7988K+ identityservices
+667    7940K+ com.apple.CloudP
+466    7828K+ usernoted
+503    7688K+ callservicesd
+1120   7576K+ TISwitcher
+1603   7460K+ LaterAgent
+1059   7440K+ Keychain Circle
+6414   7320K+ EscrowSecurityAl
+469    7312K+ bird
+759    7304K+ storedownloadd
+481    7240K+ akd
+4166   7204K+ com.apple.Safari
+4020   7200K+ BezelUIServer
+54     7168K+ jamf
+522    7156K+ imagent
+52     7120K+ fseventsd
+95     7096K+ blued
+1106   6996K+ iTunesHelper
+755    6996K+ com.apple.Commer
+758    6864K+ com.apple.Commer
+1601   6784K+ storelegacy
+442    6712K+ distnoted
+3980   6532K+ sysmond
+480    6496K+ CallHistorySyncH
+59     6492K+ configd
+113    6352K+ coreservicesd
+500    6236K+ tccd
+28238  6204K+ iTerm2
+37599  6196K+ iTerm2
+30908  6180K+ iTerm2
+44784  6060K+ iTerm2
+474    6060K+ mapspushd
+90     6048K+ securityd
+125    6016K+ amfid
+123    5904K+ authd
+3818   5840K+ systemstatsd
+525    5820K+ TMCacheDelete
+478    5732K+ askpermissiond
+1617   5696K+ mdworker
+103    5616K+ mDNSResponder
+38954  5600K+ ocspd
+4165   5600K+ DataDetectorsDyn
+178    5536K+ secinitd
+153    5532K+ coreaudiod
+744    5508K+ suhelperd
+737    5492K+ pkd
+27280  5484K+ VTDecoderXPCServ
+605    5464K+ systemsoundserve
+28224  5436K+ com.apple.photom
+27276  5328K+ crashpad_handler
+1054   5236K+ FolderActionsDis
+1602   5168K+ storeinstalld
+1085   5128K+ WiFiAgent
+530    5104K+ useractivityd
+606    4976K+ tccd
+58     4936K+ appleeventsd
+750    4920K+ WiFiProxy
+189    4900K+ networkd
+1070   4844K+ icdd
+716    4820K+ ScopedBookmarkAg
+46225  4792K+ mdworker
+524    4772K+ deleted
+665    4768K+ sharedfilelistd
+46224  4700K+ mdworker
+162    4680K+ diskmanagementd
+1125   4656K+ taskgated
+207    4640K+ usbd
+45304  4572K+ mdworker
+105    4568K+ revisiond
+46223  4504K+ mdworker
+1080   4424K+ AirPlayUIAgent
+226    4416K+ symptomsd
+43144  4256K+ CoreServicesUIAg
+110    4196K+ hidd
+46226  4144K+ com.apple.spotli
+30910  4104K+ zsh
+1081   4104K+ cloudpaird
+28240  4076K+ zsh
+117    4052K+ aslmanager
+747    4036K+ CallHistoryPlugi
+209    3860K+ VDCAssistant
+111    3860K+ AirPlayXPCHelper
+660    3856K+ pbs
+41659  3824K+ netbiosd
+203    3816K+ nehelper
+1610   3788K+ imklaunchagent
+6508   3732K+ nbstated
+1618   3700K+ IMRemoteURLConne
+523    3672K+ IMDPersistenceAg
+28216  3648K+ printtool
+434    3608K+ securityd_servic
+83     3588K+ wirelessproxd
+528    3572K+ com.apple.Addres
+80     3552K+ wdhelper
+783    3516K+ USBAgent
+1238   3504K+ nsurlstoraged
+47095  3500K+ com.apple.iCloud
+661    3496K+ swcd
+75     3452K+ iconservicesd
+28219  3444K+ com.apple.BKAgen
+5952   3436K+ ssh-agent
+1190   3436K+ com.apple.InputM
+749    3312K+ findmydeviced
+44786  3284K+ zsh
+76     3276K+ iconservicesagen
+191    3240K+ coresymbolicatio
+232    3236K+ com.apple.Ambien
+1132   3144K+ SubmitDiagInfo
+9465   3140K+ ViewBridgeAuxili
+114    3088K+ distnoted
+304    3028K+ writeconfig
+118    2988K+ cfprefsd
+472    2960K+ SocialPushAgent
+1133   2944K+ com.apple.notifi
+115    2896K+ diagnosticd
+201    2856K+ awdd
+6502   2848K+ syspolicyd
+489    2836K+ WirelessRadioMan
+547    2832K+ sharedfilelistd
+89     2780K+ usbmuxd
+277    2732K+ com.apple.CodeSi
+496    2728K+ nsurlsessiond
+4639   2668K+ com.apple.audio.
+37607  2656K+ zsh
+28232  2644K+ com.apple.audio.
+4030   2640K+ com.apple.audio.
+305    2592K+ com.apple.Accoun
+542    2576K+ CrashReporterSup
+87     2572K+ httpd
+202    2536K+ nsurlsessiond
+526    2532K+ installd
+494    2520K+ secd
+60     2516K+ powerd
+718    2444K+ filecoordination
+48     2444K+ syslogd
+265    2436K+ CVMServer
+77     2436K+ diskarbitrationd
+3982   2428K+ com.apple.hiserv
+616    2428K+ IDSKeychainSynci
+214    2316K+ thermald
+37602  2252K+ login
+30308  2248K+ helpd
+28239  2244K+ login
+204    2240K+ ntpd
+4167   2232K+ spindump
+44785  2228K+ login
+3508   2228K+ com.apple.audio.
+4029   2224K+ com.apple.audio.
+94     2176K+ displaypolicyd
+28231  2168K+ com.apple.audio.
+617    2164K+ CloudKeychainPro
+30909  2120K+ login
+107    2112K+ logind
+27379  2080K+ AppleCameraAssis
+155    2072K+ com.apple.ctkpcs
+168    2044K+ ctkd
+3981   2020K+ com.apple.Perfor
+774    2004K+ com.apple.appsto
+96     1992K+ autofsd
+193    1988K+ networkd_privile
+170    1984K+ com.apple.audio.
+1055   1976K+ spindump_agent
+213    1948K+ smd
+208    1932K+ com.apple.ifdrea
+1223   1916K+ mdflagwriter
+1229   1884K+ mdflagwriter
+112    1824K+ notifyd
+664    1792K+ pboard
+46734  1528K+ top
+46733  1508K+ top
+47165  1388K+ top
+1616   1200K+ distnoted
+508    776K+  watchdogd
+108    628K+  KernelEventAgent
+4019   564K+  ioupsd
+6427   540K+  periodic-wrapper
+9174   500K+  periodic-wrapper
+281    496K+  httpd

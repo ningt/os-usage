@@ -1,0 +1,275 @@
+Processes: 263 total, 4 running, 10 stuck, 249 sleeping, 1185 threads
+2016/09/06 23:07:20
+Load Avg: 1.95, 1.64, 1.47
+CPU usage: 5.0% user, 11.25% sys, 83.75% idle
+SharedLibs: 207M resident, 24M data, 46M linkedit.
+MemRegions: 57519 total, 5139M resident, 219M private, 1533M shared.
+PhysMem: 11G used (2345M wired), 5231M unused.
+VM: 738G vsize, 533M framework vsize, 0(0) swapins, 0(0) swapouts.
+Networks: packets: 2286102/2281M in, 1422672/453M out.
+Disks: 606137/14G read, 551109/12G written.
+
+PID    %CPU COMMAND
+45661  0.0  top
+45578  0.0  Google Chrome He
+45512  0.0  com.apple.iCloud
+45304  0.0  mdworker
+45303  0.0  mdworker
+45302  0.0  mdworker
+45301  0.0  mdworker
+45124  0.0  mdworker
+44969  0.0  Google Chrome He
+44786  0.0  zsh
+44785  0.0  login
+44784  0.0  iTerm2
+44295  0.0  Google Chrome He
+43144  0.0  CoreServicesUIAg
+42647  0.0  Google Chrome He
+42624  0.0  com.apple.Safari
+41659  0.0  netbiosd
+38954  0.0  ocspd
+37607  0.0  zsh
+37602  0.0  login
+37599  0.0  iTerm2
+34816  0.0  Google Chrome He
+32492  0.0  Image Capture Ex
+32476  0.0  Preview
+31536  0.0  LookupViewServic
+30910  0.0  zsh
+30909  0.0  login
+30908  0.0  iTerm2
+30788  0.0  com.apple.appkit
+30308  0.0  helpd
+29723  0.0  LookupViewServic
+28240  0.0  zsh
+28239  0.0  login
+28238  0.0  iTerm2
+28236  0.0  iTerm2
+28232  0.0  com.apple.audio.
+28231  0.0  com.apple.audio.
+28228  0.0  Slack
+28224  0.0  com.apple.photom
+28219  0.0  com.apple.BKAgen
+28216  0.0  printtool
+27930  0.0  plugin_host
+27929  0.0  Sublime Text
+27379  0.0  AppleCameraAssis
+27288  0.0  Google Chrome He
+27286  0.0  Google Chrome He
+27285  0.0  Google Chrome He
+27284  0.0  Google Chrome He
+27280  0.0  VTDecoderXPCServ
+27278  0.0  Google Chrome He
+27277  0.0  Google Chrome He
+27276  0.0  crashpad_handler
+27274  0.0  Google Chrome
+17319  0.0  node
+9465   0.0  ViewBridgeAuxili
+9174   0.0  periodic-wrapper
+6508   0.0  nbstated
+6507   0.0  nbagent
+6502   0.0  syspolicyd
+6427   0.0  periodic-wrapper
+6414   0.0  EscrowSecurityAl
+5952   0.0  ssh-agent
+4639   0.0  com.apple.audio.
+4167   0.0  spindump
+4166   0.0  com.apple.Safari
+4165   0.0  DataDetectorsDyn
+4030   0.0  com.apple.audio.
+4029   0.0  com.apple.audio.
+4028   0.0  com.apple.speech
+4020   0.0  BezelUIServer
+4019   0.0  ioupsd
+3982   0.0  com.apple.hiserv
+3981   0.0  com.apple.Perfor
+3980   0.0  sysmond
+3818   0.0  systemstatsd
+3508   0.0  com.apple.audio.
+3502   0.0  suggestd
+1618   0.0  IMRemoteURLConne
+1617   0.0  mdworker
+1616   0.0  distnoted
+1611   0.0  SCIM
+1610   0.0  imklaunchagent
+1603   0.0  LaterAgent
+1602   0.0  storeinstalld
+1601   0.0  storelegacy
+1238   0.0  nsurlstoraged
+1229   0.0  mdflagwriter
+1223   0.0  mdflagwriter
+1190   0.0  com.apple.InputM
+1188   0.0  AppleSpell
+1133   0.0  com.apple.notifi
+1132   0.0  SubmitDiagInfo
+1125   0.0  taskgated
+1120   0.0  TISwitcher
+1119   0.0  Spectacle
+1106   0.0  iTunesHelper
+1086   0.0  diagnostics_agen
+1085   0.0  WiFiAgent
+1081   0.0  cloudpaird
+1080   0.0  AirPlayUIAgent
+1078   0.0  ConferSystemTray
+1074   0.0  AppleIDAuthAgent
+1072-  0.0  GlobalProtect
+1070   0.0  icdd
+1069   0.0  2BUA8C4S2C.com.a
+1067   0.0  NotificationCent
+1064   0.0  jamfAgent
+1059   0.0  Keychain Circle
+1058   0.0  PanGPS
+1055   0.0  spindump_agent
+1054   0.0  FolderActionsDis
+783    0.0  USBAgent
+774    0.0  com.apple.appsto
+759    0.0  storedownloadd
+758    0.0  com.apple.Commer
+755    0.0  com.apple.Commer
+753    0.0  SpotlightNetHelp
+750    0.0  WiFiProxy
+749    0.0  findmydeviced
+748    0.0  Spotlight
+747    0.0  CallHistoryPlugi
+746    0.0  soagent
+745    0.0  storeuid
+744    0.0  suhelperd
+743    0.0  softwareupdated
+741    0.0  com.apple.dock.e
+740    0.0  iconservicesagen
+738    0.0  storeassetd
+737    0.0  pkd
+734    0.0  Finder
+733    0.0  SystemUIServer
+732    0.0  Dock
+719    0.0  com.apple.photom
+718    0.0  filecoordination
+716    0.0  ScopedBookmarkAg
+696    0.0  photolibraryd
+667    0.0  com.apple.CloudP
+665    0.0  sharedfilelistd
+664    0.0  pboard
+662    0.0  fontd
+661    0.0  swcd
+660    0.0  pbs
+617    0.0  CloudKeychainPro
+616    0.0  IDSKeychainSynci
+606    0.0  tccd
+605    0.0  systemsoundserve
+547    0.0  sharedfilelistd
+542    0.0  CrashReporterSup
+533    0.0  sharingd
+530    0.0  useractivityd
+528    0.0  com.apple.Addres
+527    0.0  com.apple.geod
+526    0.0  installd
+525    0.0  TMCacheDelete
+524    0.0  deleted
+523    0.0  IMDPersistenceAg
+522    0.0  imagent
+508    0.0  watchdogd
+503    0.0  callservicesd
+501    0.0  storeaccountd
+500    0.0  tccd
+497    0.0  CalNCService
+496    0.0  nsurlsessiond
+494    0.0  secd
+491    0.0  cloudd
+489    0.0  WirelessRadioMan
+487    0.0  accountsd
+485    0.0  identityservices
+484    0.0  nsurlstoraged
+482    0.0  secinitd
+481    0.0  akd
+480    0.0  CallHistorySyncH
+478    0.0  askpermissiond
+476    0.0  fmfd
+474    0.0  mapspushd
+473    0.0  gamed
+472    0.0  SocialPushAgent
+470    0.0  cloudphotosd
+469    0.0  bird
+467    0.0  CalendarAgent
+466    0.0  usernoted
+448    0.0  CommCenter
+447    0.0  lsd
+444    0.0  cfprefsd
+442    0.0  distnoted
+440    0.0  UserEventAgent
+434    0.0  securityd_servic
+313    0.0  parentalcontrols
+305    0.0  com.apple.Accoun
+304    0.0  writeconfig
+281    0.0  httpd
+277    0.0  com.apple.CodeSi
+265    0.0  CVMServer
+241    0.0  mds_stores
+232    0.0  com.apple.Ambien
+226    0.0  symptomsd
+214    0.0  thermald
+213    0.0  smd
+209    0.0  VDCAssistant
+208    0.0  com.apple.ifdrea
+207    0.0  usbd
+205    0.0  corestoraged
+204    0.0  ntpd
+203    0.0  nehelper
+202    0.0  nsurlsessiond
+201    0.0  awdd
+198    0.0  lsd
+193    0.0  networkd_privile
+192    0.0  WindowServer
+191    0.0  coresymbolicatio
+189    0.0  networkd
+178    0.0  secinitd
+170    0.0  com.apple.audio.
+168    0.0  ctkd
+162    0.0  diskmanagementd
+155    0.0  com.apple.ctkpcs
+153    0.0  coreaudiod
+125    0.0  amfid
+124    0.0  sandboxd
+123    0.0  authd
+118    0.0  cfprefsd
+117    0.0  aslmanager
+115    0.0  diagnosticd
+114    0.0  distnoted
+113    0.0  coreservicesd
+112    0.0  notifyd
+111    0.0  AirPlayXPCHelper
+110    0.0  hidd
+108    0.0  KernelEventAgent
+107    0.0  logind
+106    0.0  loginwindow
+105    0.0  revisiond
+103    0.0  mDNSResponder
+96     0.0  autofsd
+95     0.0  blued
+94     0.0  displaypolicyd
+92     0.0  locationd
+90     0.0  securityd
+89     0.0  usbmuxd
+88     0.0  launchservicesd
+87     0.0  httpd
+85     0.0  apsd
+83     0.0  wirelessproxd
+82     0.0  opendirectoryd
+80     0.0  wdhelper
+79     0.0  coreduetd
+77     0.0  diskarbitrationd
+76     0.0  iconservicesagen
+75     0.0  iconservicesd
+70     0.0  mds
+69     0.0  warmd
+67     0.0  airportd
+65     0.0  repmgr
+60     0.0  powerd
+59     0.0  configd
+58     0.0  appleeventsd
+54     0.0  jamf
+52     0.0  fseventsd
+51     0.0  kextd
+48     0.0  syslogd
+47     0.0  UserEventAgent
+1      0.0  launchd
+0      0.0  kernel_task

@@ -1,0 +1,126 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _events = require('events');
+
+var _utils = require('./utils');
+
+var _child_process = require('child_process');
+
+var _child_process2 = _interopRequireDefault(_child_process);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MEM_OPTS = ['-stats', 'pid,mem,command', '-o', 'mem'];
+
+var MemMonitor = function (_EventEmitter) {
+    _inherits(MemMonitor, _EventEmitter);
+
+    function MemMonitor(options) {
+        _classCallCheck(this, MemMonitor);
+
+        var _this = _possibleConstructorReturn(this, (MemMonitor.__proto__ || Object.getPrototypeOf(MemMonitor)).call(this));
+
+        _this.opts = (0, _utils.parseOptions)(MEM_OPTS, options);
+        _this.top = _child_process2.default.spawn('/usr/bin/top', _this.opts);
+        _this.listen();
+        return _this;
+    }
+
+    _createClass(MemMonitor, [{
+        key: 'listen',
+        value: function listen() {
+            var _this2 = this;
+
+            this.top.stdout.on('data', function (data) {
+                _this2.parseData(data.toString());
+            });
+        }
+    }, {
+        key: 'parseData',
+        value: function parseData(data) {
+            var memUsage = this.parseMemUsage(data);
+
+            if (memUsage) {
+                this.emit('memUsage', memUsage);
+            }
+
+            var topMemProcs = this.parseTopMemProcs(data);
+
+            if (topMemProcs) {
+                this.emit('topMemProcs', topMemProcs);
+            }
+        }
+    }, {
+        key: 'parseMemUsage',
+        value: function parseMemUsage(data) {
+            var _this3 = this;
+
+            var lines = data.split('\n');
+            var regex = /\s+(\d+.)\s+.*\((\d+.)\s+.*\s(\d+.)/;
+
+            lines.forEach(function (line) {
+                var matches = regex.exec(line);
+
+                if (matches && matches.length >= 3) {
+                    return {
+                        used: matches[1],
+                        wired: matches[2],
+                        unused: matches[3],
+                        used_kb: _this3.parseMemInKb(matches[1]),
+                        wired_kb: _this3.parseMemInKb(matches[2]),
+                        unused_kb: _this3.parseMemInKb(matches[3])
+                    };
+                }
+            });
+        }
+    }, {
+        key: 'parseTopMemProcs',
+        value: function parseTopMemProcs(data) {
+            var matches = void 0;
+            var procs = [];
+            var regex = /^(\d+)\s+(\w+).?\s+(.*)$/mg;
+
+            while (matches = regex.exec(data)) {
+                if (!matches || matches.length < 4) continue;
+
+                procs.push({
+                    pid: matches[1],
+                    mem: matches[2],
+                    command: matches[3].trim()
+                });
+            }
+
+            return procs;
+        }
+    }, {
+        key: 'parseMemInKb',
+        value: function parseMemInKb(mem) {
+            var num = Number(mem.substring(0, mem.length - 1));
+
+            if (mem.charAt(mem.length - 1) === 'M') {
+                return num * 1024;
+            } else if (mem.charAt(mem.length - 1) === 'G') {
+                return num * 1024 * 1024;
+            } else if (mem.charAt(mem.length - 1) === 'K') {
+                return num;
+            }
+        }
+    }]);
+
+    return MemMonitor;
+}(_events.EventEmitter);
+
+exports.default = MemMonitor;
+//# sourceMappingURL=memory.js.map

@@ -1,6 +1,6 @@
 'use strict';
 
-const usage = require('../index');
+const usage = require('../dist/index');
 
 console.log('OS Usage');
 
