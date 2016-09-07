@@ -34,7 +34,10 @@ var CpuMonitor = function (_EventEmitter) {
 
         _this.opts = (0, _utils.parseOptions)(CPU_OPTS, options);
         _this.top = _child_process2.default.spawn('/usr/bin/top', _this.opts);
-        _this.listen();
+
+        if (process.env.NODE_ENV !== 'test') {
+            _this.listen();
+        }
         return _this;
     }
 
@@ -83,11 +86,11 @@ var CpuMonitor = function (_EventEmitter) {
     }, {
         key: 'parseTopCpuProcs',
         value: function parseTopCpuProcs(data) {
-            var matches = void 0;
             var procs = [];
             var regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
+            var matches = regex.exec(data);
 
-            while (matches = regex.exec(data)) {
+            while (matches) {
                 if (!matches || matches.length < 4) continue;
 
                 procs.push({
@@ -95,6 +98,8 @@ var CpuMonitor = function (_EventEmitter) {
                     cpu: matches[2],
                     command: matches[3].trim()
                 });
+
+                matches = regex.exec(data);
             }
 
             return procs;

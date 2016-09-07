@@ -10,7 +10,10 @@ export default class CpuMonitor extends EventEmitter {
 
         this.opts = parseOptions(CPU_OPTS, options);
         this.top = child_process.spawn('/usr/bin/top', this.opts);
-        this.listen();
+
+        if (process.env.NODE_ENV !== 'test') {
+            this.listen();
+        }
     }
 
     listen() {
@@ -51,11 +54,11 @@ export default class CpuMonitor extends EventEmitter {
     }
 
     parseTopCpuProcs(data) {
-        let matches;
         const procs = [];
         const regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
+        let matches = regex.exec(data);
 
-        while (matches = regex.exec(data)) {
+        while (matches) {
             if (!matches || matches.length < 4) continue;
 
             procs.push({
@@ -63,6 +66,8 @@ export default class CpuMonitor extends EventEmitter {
                 cpu: matches[2],
                 command: matches[3].trim()
             });
+
+            matches = regex.exec(data);
         }
 
         return procs;

@@ -34,7 +34,10 @@ var MemMonitor = function (_EventEmitter) {
 
         _this.opts = (0, _utils.parseOptions)(MEM_OPTS, options);
         _this.top = _child_process2.default.spawn('/usr/bin/top', _this.opts);
-        _this.listen();
+
+        if (process.env.NODE_ENV !== 'test') {
+            _this.listen();
+        }
         return _this;
     }
 
@@ -45,6 +48,10 @@ var MemMonitor = function (_EventEmitter) {
 
             this.top.stdout.on('data', function (data) {
                 _this2.parseData(data.toString());
+            });
+
+            this.on('exit', function () {
+                _this2.top.kill('SIGINT');
             });
         }
     }, {
@@ -88,11 +95,11 @@ var MemMonitor = function (_EventEmitter) {
     }, {
         key: 'parseTopMemProcs',
         value: function parseTopMemProcs(data) {
-            var matches = void 0;
             var procs = [];
             var regex = /^(\d+)\s+(\w+).?\s+(.*)$/mg;
+            var matches = regex.exec(data);
 
-            while (matches = regex.exec(data)) {
+            while (matches) {
                 if (!matches || matches.length < 4) continue;
 
                 procs.push({
@@ -100,6 +107,8 @@ var MemMonitor = function (_EventEmitter) {
                     mem: matches[2],
                     command: matches[3].trim()
                 });
+
+                matches = regex.exec(data);
             }
 
             return procs;

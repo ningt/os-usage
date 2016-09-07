@@ -4,8 +4,8 @@
   "description": "A node module to watch provides system usage",
   "main": "dist/index.js",
   "scripts": {
-    "test": "node test/test.js",
-    "lint": "eslint index.js",
+    "test": "NODE_ENV=test node test/test.js",
+    "lint": "eslint src",
     "build": "babel src -d dist -s"
   },
   "keywords": [
