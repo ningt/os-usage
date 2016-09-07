@@ -1,32 +1,60 @@
 'use strict';
 
-const usage = require('../dist/index');
+var fs = require('fs');
+var path = require('path');
+var expect = require('chai').expect;
+var usage = require('../dist/index');
 
-console.log('OS Usage');
+describe('cpu monitor', function() {
+	before(function() {
+		this.cpu = new usage.CpuMonitor();
 
-var monitor1 = new usage.CpuMonitor();
-monitor1.on('cpuUsage', function(data) {
-    console.log(data);
+		var cpu_data_file = path.resolve('test/mock/cpu.txt');
+
+		try {
+			this.cpu_data = fs.readFileSync(cpu_data_file).toString();
+		} catch(e) {
+			console.error('Fail to read cpu mock data at %s.', cpu_data_file);
+		}
+	});
+
+	after(function() {
+		this.cpu.emit('exit');
+	});
+
+	it('should return correct cpu usage', function() {
+		var usage = this.cpu.parseCpuUsage(this.cpu_data);
+
+		expect(Object.keys(usage)).to.have.length(3);
+		expect(usage.user).to.equal('5.0');
+		expect(usage.sys).to.equal('11.25');
+		expect(usage.idle).to.equal('83.75');
+	});
 });
 
-monitor1.on('topCpuProcs', function(data) {
-    console.log(data);
+describe('memory monitor', function() {
+	before(function() {
+		this.memory = new usage.MemMonitor();
+
+		var mem_data_file = path.resolve('test/mock/memory.txt');
+
+		try {
+			this.mem_data = fs.readFileSync(mem_data_file).toString();
+		} catch(e) {
+			console.error('Fail to read cpu mock data at %s.', mem_data_file);
+		}
+	});
+
+	after(function() {
+		this.memory.emit('exit');
+	});
+
+	it('should return correct memory usage', function() {
+		var usage = this.memory.parseMemUsage(this.mem_data);
+
+		expect(Object.keys(usage)).to.have.length(6);
+		expect(usage.used).to.equal('12G');
+		expect(usage.wired).to.equal('2255M');
+		expect(usage.unused).to.equal('4196M');
+	});
 });
-
-setTimeout(function() {
-    monitor1.emit('exit');
-}, 1000);
-
-// memory monitor
-var monitor2 = new usage.MemMonitor();
-monitor2.on('memUsage', function(data) {
-    console.log(data);
-});
-
-monitor2.on('topMemProcs', function(data) {
-    console.log(data);
-});
-
-setTimeout(function() {
-    monitor2.emit('exit');
-}, 1000);

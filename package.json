@@ -4,7 +4,7 @@
   "description": "A node module to watch provides system usage",
   "main": "dist/index.js",
   "scripts": {
-    "test": "NODE_ENV=test node test/test.js",
+    "test": "NODE_ENV=test mocha test/test.js",
     "lint": "eslint src",
     "build": "babel src -d dist -s"
   },
@@ -17,10 +17,12 @@
     "babel-cli": "6.14.0",
     "babel-preset-es2015": "6.14.0",
     "babel-preset-stage-2": "6.13.0",
+    "chai": "3.5.0",
     "eslint": "3.4.0",
     "eslint-config-airbnb": "10.0.1",
     "eslint-plugin-import": "1.14.0",
     "eslint-plugin-jsx-a11y": "2.2.1",
-    "eslint-plugin-react": "6.2.0"
+    "eslint-plugin-react": "6.2.0",
+    "mocha": "3.0.2"
   }
 }
