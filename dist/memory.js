@@ -36,22 +36,29 @@ var MemMonitor = function (_EventEmitter) {
         _this.top = _child_process2.default.spawn('/usr/bin/top', _this.opts);
 
         if (process.env.NODE_ENV !== 'test') {
-            _this.listen();
+            _this.onData();
         }
+
+        _this.onExit();
         return _this;
     }
 
     _createClass(MemMonitor, [{
-        key: 'listen',
-        value: function listen() {
+        key: 'onData',
+        value: function onData() {
             var _this2 = this;
 
             this.top.stdout.on('data', function (data) {
                 _this2.parseData(data.toString());
             });
+        }
+    }, {
+        key: 'onExit',
+        value: function onExit() {
+            var _this3 = this;
 
             this.on('exit', function () {
-                _this2.top.kill('SIGINT');
+                _this3.top.kill('SIGINT');
             });
         }
     }, {
@@ -72,25 +79,28 @@ var MemMonitor = function (_EventEmitter) {
     }, {
         key: 'parseMemUsage',
         value: function parseMemUsage(data) {
-            var _this3 = this;
+            var _this4 = this;
 
+            var usage = void 0;
             var lines = data.split('\n');
-            var regex = /\s+(\d+.)\s+.*\((\d+.)\s+.*\s(\d+.)/;
+            var regex = /\s+(\d+.)\s+used.*\((\d+.)\s+wired.*\s(\d+.) *unused/;
 
             lines.forEach(function (line) {
                 var matches = regex.exec(line);
 
                 if (matches && matches.length >= 3) {
-                    return {
+                    usage = {
                         used: matches[1],
                         wired: matches[2],
                         unused: matches[3],
-                        used_kb: _this3.parseMemInKb(matches[1]),
-                        wired_kb: _this3.parseMemInKb(matches[2]),
-                        unused_kb: _this3.parseMemInKb(matches[3])
+                        used_kb: _this4.parseMemInKb(matches[1]),
+                        wired_kb: _this4.parseMemInKb(matches[2]),
+                        unused_kb: _this4.parseMemInKb(matches[3])
                     };
                 }
             });
+
+            return usage;
         }
     }, {
         key: 'parseTopMemProcs',

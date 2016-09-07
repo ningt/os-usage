@@ -12,15 +12,19 @@ export default class MemMonitor extends EventEmitter {
         this.top = child_process.spawn('/usr/bin/top', this.opts);
 
         if (process.env.NODE_ENV !== 'test') {
-            this.listen();
+            this.onData();
         }
+
+        this.onExit();
     }
 
-    listen() {
+    onData() {
         this.top.stdout.on('data', (data) => {
             this.parseData(data.toString());
         });
+    }
 
+    onExit() {
         this.on('exit', () => {
             this.top.kill('SIGINT');
         });
@@ -41,14 +45,15 @@ export default class MemMonitor extends EventEmitter {
     }
 
     parseMemUsage(data) {
+        let usage;
         const lines = data.split('\n');
-        const regex = /\s+(\d+.)\s+.*\((\d+.)\s+.*\s(\d+.)/;
+        const regex = / +(\d+.) +used.*\((\d+.) +wired.* *(\d+.) *unused/;
 
         lines.forEach((line) => {
             const matches = regex.exec(line);
 
             if (matches && matches.length >= 3) {
-                return {
+                usage = {
                     used: matches[1],
                     wired: matches[2],
                     unused: matches[3],
@@ -58,6 +63,8 @@ export default class MemMonitor extends EventEmitter {
                 };
             }
         });
+
+        return usage;
     }
 
     parseTopMemProcs(data) {

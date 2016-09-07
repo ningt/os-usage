@@ -36,22 +36,29 @@ var CpuMonitor = function (_EventEmitter) {
         _this.top = _child_process2.default.spawn('/usr/bin/top', _this.opts);
 
         if (process.env.NODE_ENV !== 'test') {
-            _this.listen();
+            _this.onData();
         }
+
+        _this.onExit();
         return _this;
     }
 
     _createClass(CpuMonitor, [{
-        key: 'listen',
-        value: function listen() {
+        key: 'onData',
+        value: function onData() {
             var _this2 = this;
 
             this.top.stdout.on('data', function (data) {
                 _this2.parseData(data.toString());
             });
+        }
+    }, {
+        key: 'onExit',
+        value: function onExit() {
+            var _this3 = this;
 
             this.on('exit', function () {
-                _this2.top.kill('SIGINT');
+                _this3.top.kill('SIGINT');
             });
         }
     }, {
@@ -72,16 +79,19 @@ var CpuMonitor = function (_EventEmitter) {
     }, {
         key: 'parseCpuUsage',
         value: function parseCpuUsage(data) {
+            var usage = void 0;
             var lines = data.split('\n');
-            var regex = /(\d+\.\d+)% *user.*(\d+\.\d+)% *sys.*(\d+\.\d+)% *idle/;
+            var regex = /(\d+\.\d+)% *user.*\s(\d+\.\d+)% *sys.*\s(\d+\.\d+)% *idle/;
 
             lines.forEach(function (line) {
                 var matches = regex.exec(line);
 
-                if (matches && matches.length === 6) {
-                    return { user: matches[3], sys: matches[4], idle: matches[5] };
+                if (matches && matches.length >= 4) {
+                    usage = { user: matches[1], sys: matches[2], idle: matches[3] };
                 }
             });
+
+            return usage;
         }
     }, {
         key: 'parseTopCpuProcs',

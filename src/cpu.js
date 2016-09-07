@@ -12,15 +12,19 @@ export default class CpuMonitor extends EventEmitter {
         this.top = child_process.spawn('/usr/bin/top', this.opts);
 
         if (process.env.NODE_ENV !== 'test') {
-            this.listen();
+            this.onData();
         }
+
+        this.onExit();
     }
 
-    listen() {
+    onData() {
         this.top.stdout.on('data', (data) => {
             this.parseData(data.toString());
         });
+    }
 
+    onExit() {
         this.on('exit', () => {
             this.top.kill('SIGINT');
         });
@@ -41,16 +45,19 @@ export default class CpuMonitor extends EventEmitter {
     }
 
     parseCpuUsage(data) {
+        let usage;
         const lines = data.split('\n');
-        const regex = /(\d+\.\d+)% *user.*(\d+\.\d+)% *sys.*(\d+\.\d+)% *idle/;
+        const regex = /(\d+\.\d+)% *user.*\s(\d+\.\d+)% *sys.*\s(\d+\.\d+)% *idle/;
 
         lines.forEach((line) => {
             const matches = regex.exec(line);
 
-            if (matches && matches.length === 6) {
-                return { user: matches[3], sys: matches[4], idle: matches[5] };
+            if (matches && matches.length >= 4) {
+                usage = { user: matches[1], sys: matches[2], idle: matches[3] };
             }
         });
+
+        return usage;
     }
 
     parseTopCpuProcs(data) {
