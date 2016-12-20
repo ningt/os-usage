@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _events = require('events');
@@ -24,20 +22,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var DEFAULT_LIMIT = 5;
 var CPU_OPTS = ['-stats', 'pid,cpu,command', '-o', 'cpu'];
+
+/*
+ * options
+ *     limit    @number
+ *     delay    @number
+ *     exclude  @array
+ */
 
 var CpuMonitor = function (_EventEmitter) {
     _inherits(CpuMonitor, _EventEmitter);
 
     function CpuMonitor() {
-        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
         _classCallCheck(this, CpuMonitor);
 
         var _this = _possibleConstructorReturn(this, (CpuMonitor.__proto__ || Object.getPrototypeOf(CpuMonitor)).call(this));
 
-        _this.limit = options['limit'] || 5;
-        _this.opts = (0, _utils.parseOptions)(CPU_OPTS, _extends({}, options, { limit: _this.limit + 1 }));
+        _this.exclude = options.exclude || [];
+        _this.limit = options.limit || DEFAULT_LIMIT;
+        _this.opts = (0, _utils.parseOptions)(CPU_OPTS, options);
         _this.top = _child_process2.default.spawn('/usr/bin/top', _this.opts);
 
         if (process.env.NODE_ENV !== 'test') {
@@ -101,15 +108,15 @@ var CpuMonitor = function (_EventEmitter) {
     }, {
         key: 'parseTopCpuProcs',
         value: function parseTopCpuProcs(data) {
-            var topPid = String(this.top.pid);
             var procs = [];
             var regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
             var matches = regex.exec(data);
 
             while (matches) {
-                if (!matches || matches.length < 4) continue;
+                if (!matches || matches.length < 4 || procs.length >= this.limit || this.exclude.indexOf(matches[3].trim()) > -1 // exclude this proc from results
+                ) continue;
 
-                if (topPid !== matches[1] && procs.length < this.limit) procs.push({
+                procs.push({
                     pid: matches[1],
                     cpu: matches[2],
                     command: matches[3].trim()

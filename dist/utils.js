@@ -4,18 +4,33 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.parseOptions = parseOptions;
-function parseOptions(default_opts, options) {
-    var opts = default_opts;
-    var v = void 0,
-        limit = 5,
-        delay = 1;
+
+var _util = require('util');
+
+var _util2 = _interopRequireDefault(_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DEFAULT_LIMIT = 5;
+var DEFAULT_DELAY = 1;
+
+function parseOptions(default_options, options) {
+    var opts = default_options;
+    var limit = DEFAULT_LIMIT,
+        delay = DEFAULT_DELAY;
 
     if (options) {
-        v = Number(options.limit);
-        limit = v > 0 && v < 20 ? v : limit;
+        if (_util2.default.isNumber(options.limit)) {
+            limit = options.limit;
+        }
 
-        v = Number(options.delay);
-        delay = v > 0 ? v : delay;
+        if (_util2.default.isNumber(options.delay)) {
+            delay = options.delay;
+        }
+
+        if (_util2.default.isArray(options.exclude)) {
+            limit += options.exclude.length;
+        }
     }
 
     opts.push('-n');

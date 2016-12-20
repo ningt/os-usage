@@ -22,16 +22,28 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var DEFAULT_LIMIT = 5;
 var MEM_OPTS = ['-stats', 'pid,mem,command', '-o', 'mem'];
+
+/*
+ * options
+ *     limit    @number
+ *     delay    @number
+ *     exclude  @array
+ */
 
 var MemMonitor = function (_EventEmitter) {
     _inherits(MemMonitor, _EventEmitter);
 
-    function MemMonitor(options) {
+    function MemMonitor() {
+        var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
         _classCallCheck(this, MemMonitor);
 
         var _this = _possibleConstructorReturn(this, (MemMonitor.__proto__ || Object.getPrototypeOf(MemMonitor)).call(this));
 
+        _this.exclude = options.exclude || [];
+        _this.limit = options.limit || DEFAULT_LIMIT;
         _this.opts = (0, _utils.parseOptions)(MEM_OPTS, options);
         _this.top = _child_process2.default.spawn('/usr/bin/top', _this.opts);
 
@@ -83,7 +95,7 @@ var MemMonitor = function (_EventEmitter) {
 
             var usage = void 0;
             var lines = data.split('\n');
-            var regex = / +(\d+.) +used.*\((\d+.) +wired.* *(\d+.) *unused/;
+            var regex = / +(\d+.) +used.*\((\d+.) +wired.* +(\d+.) +unused/;
 
             lines.forEach(function (line) {
                 var matches = regex.exec(line);
@@ -110,7 +122,8 @@ var MemMonitor = function (_EventEmitter) {
             var matches = regex.exec(data);
 
             while (matches) {
-                if (!matches || matches.length < 4) continue;
+                if (!matches || matches.length < 4 || procs.length >= this.limit || this.exclude.indexOf(matches[3].trim()) > -1 // exclude this proc from results
+                ) continue;
 
                 procs.push({
                     pid: matches[1],
