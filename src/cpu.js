@@ -2,14 +2,22 @@ import { EventEmitter } from 'events';
 import { parseOptions } from './utils';
 import child_process from 'child_process';
 
+const DEFAULT_LIMIT = 5;
 const CPU_OPTS = ['-stats', 'pid,cpu,command', '-o', 'cpu'];
 
+/*
+ * options
+ *     limit    @number
+ *     delay    @number
+ *     exclude  @array
+ */
 export default class CpuMonitor extends EventEmitter {
     constructor(options = {}) {
         super();
 
-        this.limit = options['limit'] || 5;
-        this.opts = parseOptions(CPU_OPTS, {...options, limit: this.limit + 1});
+        this.exclude = options.exclude || [];
+        this.limit = options.limit || DEFAULT_LIMIT;
+        this.opts = parseOptions(CPU_OPTS, options);
         this.top = child_process.spawn('/usr/bin/top', this.opts);
 
         if (process.env.NODE_ENV !== 'test') {
@@ -62,20 +70,22 @@ export default class CpuMonitor extends EventEmitter {
     }
 
     parseTopCpuProcs(data) {
-        const topPid = String(this.top.pid);
         const procs = [];
         const regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
         let matches = regex.exec(data);
 
         while (matches) {
-            if (!matches || matches.length < 4) continue;
+            if (!matches ||
+                matches.length < 4 ||
+                procs.length >= this.limit ||
+                this.exclude.indexOf(matches[3].trim()) > -1 // exclude this proc from results
+            ) continue;
 
-            if (topPid !== matches[1] && procs.length < this.limit)
-                procs.push({
-                    pid: matches[1],
-                    cpu: matches[2],
-                    command: matches[3].trim()
-                });
+            procs.push({
+                pid: matches[1],
+                cpu: matches[2],
+                command: matches[3].trim()
+            });
 
             matches = regex.exec(data);
         }

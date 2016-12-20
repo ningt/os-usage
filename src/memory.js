@@ -2,12 +2,21 @@ import { EventEmitter } from 'events';
 import { parseOptions } from './utils';
 import child_process from 'child_process';
 
+const DEFAULT_LIMIT = 5;
 const MEM_OPTS = ['-stats', 'pid,mem,command', '-o', 'mem'];
 
+/*
+ * options
+ *     limit    @number
+ *     delay    @number
+ *     exclude  @array
+ */
 export default class MemMonitor extends EventEmitter {
-    constructor(options) {
+    constructor(options = {}) {
         super();
 
+        this.exclude = options.exclude || [];
+        this.limit = options.limit || DEFAULT_LIMIT;
         this.opts = parseOptions(MEM_OPTS, options);
         this.top = child_process.spawn('/usr/bin/top', this.opts);
 
@@ -47,7 +56,7 @@ export default class MemMonitor extends EventEmitter {
     parseMemUsage(data) {
         let usage;
         const lines = data.split('\n');
-        const regex = / +(\d+.) +used.*\((\d+.) +wired.* *(\d+.) *unused/;
+        const regex = / +(\d+.) +used.*\((\d+.) +wired.* +(\d+.) +unused/;
 
         lines.forEach((line) => {
             const matches = regex.exec(line);
@@ -73,7 +82,11 @@ export default class MemMonitor extends EventEmitter {
         let matches = regex.exec(data);
 
         while (matches) {
-            if (!matches || matches.length < 4) continue;
+            if (!matches ||
+                matches.length < 4 ||
+                procs.length >= this.limit ||
+                this.exclude.indexOf(matches[3].trim()) > -1 // exclude this proc from results
+            ) continue;
 
             procs.push({
                 pid: matches[1],

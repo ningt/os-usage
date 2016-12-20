@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 'use strict';
 
 var fs = require('fs');
@@ -9,7 +11,7 @@ describe('cpu monitor', function() {
 	before(function() {
 		this.cpu = new usage.CpuMonitor();
 
-		var cpu_data_file = path.resolve('test/mock/cpu.txt');
+		var cpu_data_file = path.resolve('test/mock/cpu2.txt');
 
 		try {
 			this.cpu_data = fs.readFileSync(cpu_data_file).toString();
@@ -26,9 +28,9 @@ describe('cpu monitor', function() {
 		var usage = this.cpu.parseCpuUsage(this.cpu_data);
 
 		expect(Object.keys(usage)).to.have.length(3);
-		expect(usage.user).to.equal('5.0');
-		expect(usage.sys).to.equal('11.25');
-		expect(usage.idle).to.equal('83.75');
+		expect(usage.user).to.equal('3.35');
+		expect(usage.sys).to.equal('2.75');
+		expect(usage.idle).to.equal('93.89');
 	});
 });
 

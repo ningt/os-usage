@@ -1,13 +1,24 @@
-export function parseOptions(default_opts, options) {
-    const opts = default_opts;
-    let v, limit = 5, delay = 1;
+import util from 'util';
+
+const DEFAULT_LIMIT = 5;
+const DEFAULT_DELAY = 1;
+
+export function parseOptions(default_options, options) {
+    const opts = default_options;
+    let limit = DEFAULT_LIMIT, delay = DEFAULT_DELAY;
 
     if (options) {
-        v = Number(options.limit);
-        limit = v > 0 && v < 20 ? v : limit;
+        if (util.isNumber(options.limit)) {
+            limit = options.limit;
+        }
 
-        v = Number(options.delay);
-        delay = v > 0 ? v : delay;
+        if (util.isNumber(options.delay)) {
+            delay = options.delay;
+        }
+
+        if (util.isArray(options.exclude)) {
+            limit += options.exclude.length;
+        }
     }
 
     opts.push('-n');
