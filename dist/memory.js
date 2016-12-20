@@ -83,7 +83,7 @@ var MemMonitor = function (_EventEmitter) {
 
             var usage = void 0;
             var lines = data.split('\n');
-            var regex = /\s+(\d+.)\s+used.*\((\d+.)\s+wired.*\s(\d+.) *unused/;
+            var regex = / +(\d+.) +used.*\((\d+.) +wired.* *(\d+.) *unused/;
 
             lines.forEach(function (line) {
                 var matches = regex.exec(line);
