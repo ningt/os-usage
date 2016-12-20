@@ -5,10 +5,11 @@ import child_process from 'child_process';
 const CPU_OPTS = ['-stats', 'pid,cpu,command', '-o', 'cpu'];
 
 export default class CpuMonitor extends EventEmitter {
-    constructor(options) {
+    constructor(options = {}) {
         super();
 
-        this.opts = parseOptions(CPU_OPTS, options);
+        this.limit = options['limit'] || 5;
+        this.opts = parseOptions(CPU_OPTS, {...options, limit: this.limit + 1});
         this.top = child_process.spawn('/usr/bin/top', this.opts);
 
         if (process.env.NODE_ENV !== 'test') {
@@ -61,6 +62,7 @@ export default class CpuMonitor extends EventEmitter {
     }
 
     parseTopCpuProcs(data) {
+        const topPid = String(this.top.pid);
         const procs = [];
         const regex = /^(\d+)\s+(\d+\.\d+)\s+(.*)$/mg;
         let matches = regex.exec(data);
@@ -68,11 +70,12 @@ export default class CpuMonitor extends EventEmitter {
         while (matches) {
             if (!matches || matches.length < 4) continue;
 
-            procs.push({
-                pid: matches[1],
-                cpu: matches[2],
-                command: matches[3].trim()
-            });
+            if (topPid !== matches[1] && procs.length < this.limit)
+                procs.push({
+                    pid: matches[1],
+                    cpu: matches[2],
+                    command: matches[3].trim()
+                });
 
             matches = regex.exec(data);
         }
