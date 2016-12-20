@@ -69,10 +69,11 @@ You can pass the following parameter when you initialize a monitor.
 | --------- | ----------- |
 | `limit` | number of processes to watch, default is `5` |
 | `delay` | time interval in seconds to refesh stats, default is `1`|
+| `exclude` | array of process names that will be ignore from results |
 
 Example:
 
 ```
-var opts = {limit: 10, delay: 2};
+var opts = { limit: 10, delay: 2, exclude: ['top', 'kernel_task', ...] };
 var monitor = new usage.CpuMonitor(opts);
 ```
