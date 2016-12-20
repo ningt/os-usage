@@ -1,6 +1,6 @@
 {
   "name": "os-usage",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A node module to watch provides system usage",
   "main": "dist/index.js",
   "scripts": {
